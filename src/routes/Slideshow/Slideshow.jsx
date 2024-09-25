@@ -1,21 +1,21 @@
 // Slideshow.jsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { initSlideshow } from './Slideshow'; // Importa a função do slideshow
 
 const Slideshow = () => {
-    useEffect(() => {
-        const container = document.createElement('div');
-        container.id = 'slideshow-container';
-        document.body.appendChild(container);
-        initSlideshow(container); // Chama a função com o contêiner
+    const containerRef = useRef(null); // Referência para o contêiner do slideshow
 
-        // Limpeza: Remove o contêiner ao desmontar o componente
-        return () => {
-            document.body.removeChild(container);
-        };
+    useEffect(() => {
+        if (containerRef.current) {
+            initSlideshow(containerRef.current); // Inicializa o slideshow no contêiner
+        }
     }, []);
 
-    return null; // Não renderiza nada, o slideshow é gerado no body
+    return (
+        <div className="slideshow-container" ref={containerRef}>
+            {/* O slideshow será inicializado aqui */}
+        </div>
+    );
 };
 
 export default Slideshow;

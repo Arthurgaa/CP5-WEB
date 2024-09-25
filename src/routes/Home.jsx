@@ -4,7 +4,6 @@ const Home=()=>{
 
     return(
         <>
-        <h1>PowerRide</h1>
         <Slideshow />
         </>
     )

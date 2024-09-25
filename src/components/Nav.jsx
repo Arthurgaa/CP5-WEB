@@ -52,14 +52,7 @@ const Nav = () => {
             <NavLink to="/produtos">Produtos</NavLink>
             <NavLink to="/sobre">Sobre</NavLink>
             <NavLink to="/login">Login</NavLink>
-            <LogoutButton
-                onClick={() => {
-                    sessionStorage.clear();
-                    window.location.href = './routes/Home.jsx';
-                }}
-            >
-                Logout
-            </LogoutButton>
+            <NavLink to="/"><LogoutButton>Logout</LogoutButton></NavLink>
         </NavContainer>
     );
 }

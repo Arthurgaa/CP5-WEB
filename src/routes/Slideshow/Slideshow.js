@@ -1,49 +1,79 @@
-// slideshow.js
+// Slideshow.js
 const images = [
-    'imagem1.jpg',
-    'imagem2.jpg',
-    'imagem3.jpg'
+    '/imagem1.jpg', // Caminho relativo à pasta public
+    '/imagem2.jpg',
+    '/imagem3.jpg'
 ];
 
 let slideIndex = 0;
 
 function initSlideshow(container) {
+    // Cria os slides e adiciona ao contêiner
+    images.forEach((image, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'slide';
+        slide.innerHTML = `<img src="${image}" alt="Imagem ${index + 1}">`;
+        container.appendChild(slide);
+    });
+
     function showSlides() {
-        container.innerHTML = ''; // Limpa o contêiner
+        const slides = container.getElementsByClassName('slide');
 
-        images.forEach((image, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'slide';
-            if (index === slideIndex) {
-                slide.classList.add('fade');
-            }
-            slide.innerHTML = `<img src="${image}" alt="Imagem ${index + 1}">`;
-            container.appendChild(slide);
-        });
+        // Verifica se há slides disponíveis
+        if (slides.length === 0) return;
 
-        slideIndex = (slideIndex + 1) % images.length;
-        setTimeout(() => showSlides(), 3000); // Muda a imagem a cada 3 segundos
+        // Esconde todos os slides
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = 'none'; // Oculta todos os slides
+        }
+
+        // Mostra o slide atual
+        slides[slideIndex].style.display = 'block';
+        slideIndex = (slideIndex + 1) % slides.length; // Vai para o próximo slide
+
+        setTimeout(showSlides, 3000); // Muda a imagem a cada 3 segundos
     }
 
     // Adiciona o estilo CSS ao documento
     const style = document.createElement('style');
     style.innerHTML = `
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
         .slideshow-container {
+            flex-grow: 1; /* O slideshow ocupará o espaço restante */
             position: relative;
-            max-width: 600px;
-            margin: auto;
+            width: 100%; /* Ocupa toda a largura disponível */
+            height: calc(100vh - 100px); /* Ajuste de altura, 100px para o footer (ajuste conforme o tamanho do footer) */
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .slide {
             display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         img {
             width: 100%;
-            height: auto;
-        }
-        .fade {
-            animation: fade 1.5s ease;
-            display: block;
+            height: 100%;
+            object-fit: cover; /* Ajusta a imagem para cobrir toda a tela sem distorcer */
+            object-position: center; /* Centraliza a imagem na área */
         }
         @keyframes fade {
             from { opacity: 0; }
@@ -55,6 +85,4 @@ function initSlideshow(container) {
     showSlides(); // Inicia o slideshow
 }
 
-// Exporta a função
 export { initSlideshow };
-

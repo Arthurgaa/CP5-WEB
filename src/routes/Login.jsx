@@ -1,119 +1,169 @@
-import { useRef, useState, useEffect} from "react"
-import {useNavigate} from 'react-router-dom'
+import { useRef, useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-const Login =()=>{
+const Container = styled.section`
 
-    //Hook-useRef pega a referencia de um componente ou elemento do DOM
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+`;
+
+const LoginContainer = styled.div`
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+`;
+
+const Title = styled.span`
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+`;
+
+const InputWrapper = styled.div`
+    margin-bottom: 1rem;
+    position: relative;
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+
+        &:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    }
+
+    span {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: #aaa;
+        transition: 0.3s;
+        pointer-events: none;
+    }
+
+    input:focus + span,
+    input:not(:placeholder-shown) + span {
+        top: -10px;
+        left: 10px;
+        font-size: 0.8rem;
+        color: #007bff;
+    }
+`;
+
+const Button = styled.button`
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+`;
+
+const UteisList = styled.ul`
+    margin-top: 1rem;
+    list-style: none;
+    padding: 0;
+    text-align: center;
+
+    li {
+        margin: 0.5rem 0;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+`;
+
+const Login = () => {
     const usuario = useRef();
     const senha = useRef();
-
-    //Hook-useState - Manipula o estado da variavel
-    const [usuarios, setUsuarios]=useState([])
-
-    //Hook -useNavigate- ele redireciona para outro componente
+    const [usuarios, setUsuarios] = useState([]);
     const navigate = useNavigate();
 
-    //criando a função de validação
-
-    function validar(){
-        for( let  i=0; i <usuarios.length;i++){
-            if(
-                usuarios[i].usuario == usuario.current.value &&
-                usuarios[i].senha ==senha.current.value
-            )
-            return true
+    function validar() {
+        for (let i = 0; i < usuarios.length; i++) {
+            if (usuarios[i].usuario === usuario.current.value &&
+                usuarios[i].senha === senha.current.value) {
+                return true;
+            }
         }
+        return false;
     }
-    
 
-    //criado a função handleSubmit
-    const handleSubmit=(e)=>{
-        //previne que sua pagina faça qualquer modificação ex. load
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if(validar()){
-            //criando a autenticação
-            let token=
-                Math.random().toString(16).substring(2)+
-                Math.random().toString(16).substring(2)
-                sessionStorage.setItem("usuario",usuario.current.value);
-                sessionStorage.setItem("senha", token);
-                navigate("/dashboard");
-        } else{
-            alert("usuario/senha inválidos")
+        if (validar()) {
+            const token = Math.random().toString(16).substring(2) +
+                Math.random().toString(16).substring(2);
+            sessionStorage.setItem("usuario", usuario.current.value);
+            sessionStorage.setItem("senha", token);
+            navigate("/dashboard");
+        } else {
+            alert("Usuário/senha inválidos");
         }
     }
 
-    //Hook-useEffect vai buscar os dados do login no json
-
-    useEffect(()=>{
-        //pega o link da url
+    useEffect(() => {
         fetch("http://localhost:5000/usuarios")
-        //promise
-        .then((res)=>{
-            //converte os dados para json
-            return res.json();
-        })
-        .then((res)=>{
-            //recebe as alterações da variavel
-            setUsuarios(res)
-        })
-        //retrona um array vazio
-    },[])
+            .then(res => res.json())
+            .then(res => setUsuarios(res));
+    }, []);
 
-    return(
-        <section className="container">
-            <div className="container-login">
-            <div className="login">
+    return (
+        <Container>
+            <LoginContainer>
+                <Title>Faça seu Login</Title>
+                <form onSubmit={handleSubmit}>
+                    <InputWrapper>
+                        <input type="text" id="usuario" ref={usuario} required placeholder=" " />
+                        <span>Usuário</span>
+                    </InputWrapper>
 
-                <form className="login-form" onSubmit={handleSubmit}>
-                    <span className="titulo-login">Faça seu Login</span>
+                    <InputWrapper>
+                        <input type="password" id="senha" ref={senha} required placeholder=" " />
+                        <span>Senha</span>
+                    </InputWrapper>
 
-                    <div className="w-input">
-                            <input
-                                type="text"
-                                className="input-form"
-                                id="usuario"
-                                ref={usuario}                 
-                            />
-                            <span placeholder="usuario"></span>
-                    </div>
+                    <Button type="submit">Login</Button>
 
-
-                    <div className="w-input">
-                            <input
-                                type="password"
-                                className="input-form"
-                                id="senha"
-                                ref={senha}                 
-                            />
-                            <span placeholder="senha"></span>
-                    </div>
-
-                    <div className="login-btn">
-                        <button type="submit" className="login-form-btn">Login</button>
-
-                    </div>
-
-                    {/*uteis */}
-
-                    <ul className="uteis">
+                    <UteisList>
+                        <li><span>Esqueceu sua senha?</span></li>
                         <li>
-                            <span className="texto1">Esqueçeu sua senha?</span>
+                            <span>Não possui Conta? </span>
+                            <a href="#">Criar</a>
                         </li>
-                        <li>
-                            <span className="texto1">Não possui Conta?</span>
-                           <a href="#">
-                            Criar
-                           </a>
-                        </li>
-
-                    </ul>
-
+                    </UteisList>
                 </form>
-            </div>
-            <img src="" alt="logo"/>
-            </div>
-        </section>
-    )
+            </LoginContainer>
+        </Container>
+    );
 }
-export default Login
+
+export default Login;

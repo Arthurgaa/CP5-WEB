@@ -46,7 +46,7 @@ const InputWrapper = styled.div`
         transition: border-color 0.3s;
 
         &:focus {
-            border-color: #007bff;
+            border-color: #515151;
             outline: none;
         }
     }
@@ -65,14 +65,14 @@ const InputWrapper = styled.div`
         top: -10px;
         left: 10px;
         font-size: 0.8rem;
-        color: #007bff;
+        color: #5151515;
     }
 `;
 
 const Button = styled.button`
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #515151;
     border: none;
     border-radius: 4px;
     color: white;
@@ -81,7 +81,7 @@ const Button = styled.button`
     transition: background-color 0.3s;
 
     &:hover {
-        background-color: #0056b3;
+        background-color: #3c3c3c;
     }
 `;
 
@@ -96,7 +96,7 @@ const UteisList = styled.ul`
     }
 
     a {
-        color: #007bff;
+        color: #515151;
         text-decoration: none;
     }
 `;

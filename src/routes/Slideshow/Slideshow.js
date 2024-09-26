@@ -1,6 +1,6 @@
 // Slideshow.js
 const images = [
-    '/imagem1.jpg', // Caminho relativo à pasta public
+    '/imagem1.webp', // Caminho relativo à pasta public
     '/imagem2.jpg',
     '/imagem3.jpg'
 ];
@@ -55,7 +55,7 @@ function initSlideshow(container) {
             flex-grow: 1; /* O slideshow ocupará o espaço restante */
             position: relative;
             width: 100%; /* Ocupa toda a largura disponível */
-            height: calc(100vh - 100px); /* Ajuste de altura, 100px para o footer (ajuste conforme o tamanho do footer) */
+            height: 100vh; /* Define a altura para 100% da tela */
             overflow: hidden;
             display: flex;
             justify-content: center;

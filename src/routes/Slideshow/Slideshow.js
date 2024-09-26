@@ -1,6 +1,6 @@
 // Slideshow.js
 const images = [
-    '/imagem1.webp', // Caminho relativo à pasta public
+    '/imagem1.jpg', // Caminho relativo à pasta public
     '/imagem2.jpg',
     '/imagem3.jpg'
 ];

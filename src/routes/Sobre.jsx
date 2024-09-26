@@ -94,6 +94,7 @@ const Sobre = () => {
   return (
     <SobreContainer>
       <Title>Sobre a PowerRide</Title>
+      <hr />
       <Paragraph>
         Na PowerRide, estamos moldando o futuro da mobilidade. Fundada com a missão de transformar o transporte urbano,
         nossa paixão por inovação e sustentabilidade nos impulsiona a oferecer as melhores soluções em veículos elétricos.

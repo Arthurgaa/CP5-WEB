@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 const Produtos = () => {
   // Estado inicial com alguns produtos cadastrados
   const [produtos, setProdutos] = useState([
-    { id: 1, nome: 'Produto 1', preco: 100, img: '' },
-    { id: 2, nome: 'Produto 2', preco: 200, img: '' },
-    { id: 3, nome: 'Produto 3', preco: 300, img: '' }
+    { id: 1, nome: 'Volvo EX30', preco: 229.950, img: '' },
+    { id: 2, nome: 'Baojun Cloud', preco: 65.700, img: '' },
+    { id: 3, nome: 'BYD Dolphin', preco: 99.800, img: '' }
   ]);
 
   // Função para adicionar um novo produto
@@ -35,7 +35,7 @@ const Produtos = () => {
             </div>
             <div className="produto-info">
               <h2 className="produto-nome">{produto.nome}</h2>
-              <p className="produto-preco">R$ {produto.preco.toFixed(2)}</p>
+              <p className="produto-preco">R$ {produto.preco.toFixed(3)}</p>
             </div>
           </div>
         ))}

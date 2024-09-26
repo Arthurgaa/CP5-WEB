@@ -9,7 +9,6 @@ const NavContainer = styled.nav`
     background-color: #ffffff;
     padding: 1rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Oswald', sans-serif;
 `;
 
 const Logo = styled.img`
@@ -25,6 +24,7 @@ const NavLinks = styled.div`
 `;
 
 const NavLink = styled(Link)`
+    font-family: "Orbitron", sans-serif;
     color: #333333;
     text-decoration: none;
     font-size: 1.1rem;

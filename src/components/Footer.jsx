@@ -1,46 +1,67 @@
-import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import React from 'react';
+import styled from 'styled-components';
+import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa'; // Ícones de redes sociais
+
+const FooterContainer = styled.footer`
+font-family: "Orbitron", sans-serif;
+  background-color: #111;
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+`;
+
+const SocialIcons = styled.div`
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+`;
+
+const IconLink = styled.a`
+  color: #fff;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+  &:hover {
+    color: #00bfa6;
+  }
+`;
+
+const FooterLink = styled.a`
+  color: #bbb;
+  text-decoration: none;
+  margin: 0 1rem;
+  &:hover {
+    color: white;
+  }
+`;
+
+const FooterBottom = styled.div`
+  font-size: 0.8rem;
+  margin-top: 1rem;
+`;
 
 const Footer = () => {
-    return (
-        <footer style={footerStyle}>
-            <div style={footerContentStyle}>
-                <p>Siga-nos nas redes sociais</p>
-                <div style={iconStyle}>
-                    <FaFacebook size={30} style={{ margin: '0 10px' }} />
-                    <FaInstagram size={30} style={{ margin: '0 10px' }} />
-                    <FaLinkedin size={30} style={{ margin: '0 10px' }} />
-                </div>
-                <p>Email: contato@lojadecarroseletricos.com</p>
-                <h5>@2024 - Direitos reservados</h5>
-            </div>
-        </footer>
-    );
-};
-
-const footerStyle = {
-    width: '100%',
-    height: '150px', // Aumentei a altura para acomodar melhor os elementos
-    backgroundColor: 'black',
-    color: 'white',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-    bottom: '0',
-    textAlign: 'center',
-};
-
-const footerContentStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-};
-
-const iconStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '10px 0',
+  return (
+    <FooterContainer>
+      <SocialIcons>
+        <IconLink href="https://facebook.com" target="_blank" aria-label="Facebook">
+          <FaFacebook />
+        </IconLink>
+        <IconLink href="https://twitter.com" target="_blank" aria-label="Twitter">
+          <FaTwitter />
+        </IconLink>
+        <IconLink href="https://instagram.com" target="_blank" aria-label="Instagram">
+          <FaInstagram />
+        </IconLink>
+      </SocialIcons>
+      <div>
+        <FooterLink href="#">Termos de Uso</FooterLink> | <FooterLink href="#">Política de Privacidade</FooterLink> | <FooterLink href="#">Contato</FooterLink>
+      </div>
+      <FooterBottom>
+        © 2024 PowerRide. Todos os direitos reservados.
+      </FooterBottom>
+    </FooterContainer>
+  );
 };
 
 export default Footer;
-

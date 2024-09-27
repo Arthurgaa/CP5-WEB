@@ -1,22 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Produtos = () => {
-  // Estado inicial com alguns produtos cadastrados
-  const [produtos, setProdutos] = useState([
-    { id: 1, nome: 'Volvo EX30', preco: 229.950, img: '' },
-    { id: 2, nome: 'Baojun Cloud', preco: 65.700, img: '' },
-    { id: 3, nome: 'BYD Dolphin', preco: 99.800, img: '' }
-  ]);
+  // Produtos principais hardcoded
+  const produtosPrincipais = [
+    { id: 1, nome: 'Volvo EX30', preco: 229.950, img: '/volvoex30.avif' },
+    { id: 2, nome: 'Baojun Cloud', preco: 65.700, img: '/baojun-cloud.jpg' },
+    { id: 3, nome: 'BYD Dolphin', preco: 99.800, img: '/BYD-Dolphin.webp' },
+  ];
 
-  // Função para adicionar um novo produto
-  const cadastrarProduto = () => {
-    const novoProduto = {
-      id: produtos.length + 1,
-      nome: `Produto ${produtos.length + 1}`,
-      preco: Math.random() * 1000,
-      img: '' // Você pode colocar uma URL de imagem padrão aqui
+  const [produtosAdicionais, setProdutosAdicionais] = useState([]);
+
+  useEffect(() => {
+    // Carregar produtos adicionais do JSON Server
+    const fetchProdutos = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/produtos');
+        const data = await response.json();
+        setProdutosAdicionais(data);
+      } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
+      }
     };
-    setProdutos([...produtos, novoProduto]);
+
+    fetchProdutos();
+  }, []);
+
+  const handleDelete = async (id) => {
+    // Função para excluir um produto
+    const confirmacao = window.confirm('Você tem certeza que deseja excluir este produto?');
+    if (!confirmacao) return;
+
+    try {
+      const response = await fetch(`http://localhost:3001/produtos/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Atualiza a lista de produtos removendo o produto deletado
+        setProdutosAdicionais(produtosAdicionais.filter(produto => produto.id !== id));
+        alert('Produto excluído com sucesso!');
+      } else {
+        throw new Error('Erro ao excluir o produto.');
+      }
+    } catch (error) {
+      console.error('Erro ao excluir o produto:', error);
+      alert('Falha ao excluir o produto.');
+    }
   };
 
   return (
@@ -24,7 +54,8 @@ const Produtos = () => {
       <h1 className="titulo">Lista de Produtos</h1>
 
       <div className="produtos-lista">
-        {produtos.map(produto => (
+        {/* Exibir os produtos principais */}
+        {produtosPrincipais.map((produto) => (
           <div key={produto.id} className="produto-card">
             <div className="produto-img-container">
               <img
@@ -35,20 +66,39 @@ const Produtos = () => {
             </div>
             <div className="produto-info">
               <h2 className="produto-nome">{produto.nome}</h2>
-              <p className="produto-preco">R$ {produto.preco.toFixed(3)}</p>
+              <p className="produto-preco">R$ {produto.preco.toFixed(2)}</p>
+            </div>
+          </div>
+        ))}
+
+        {/* Exibir os produtos adicionais cadastrados */}
+        {produtosAdicionais.map((produto) => (
+          <div key={produto.id} className="produto-card">
+            <div className="produto-img-container">
+              <img
+                src={produto.img || 'https://via.placeholder.com/150'}
+                alt={produto.nome}
+                className="produto-img"
+              />
+            </div>
+            <div className="produto-info">
+              <h2 className="produto-nome">{produto.nome}</h2>
+              <p className="produto-preco">R$ {produto.preco.toFixed(2)}</p>
+              <button className="btn-excluir" onClick={() => handleDelete(produto.id)}>
+                Excluir
+              </button>
             </div>
           </div>
         ))}
       </div>
 
-      <button className="btn-cadastrar" onClick={cadastrarProduto}>
-        Cadastrar Produto
-      </button>
+      <Link to="/cadastrarproduto">
+        <button className="btn-cadastrar">Cadastrar Produto</button>
+      </Link>
 
       <style jsx>{`
-
         *{
-            font-family: "Orbitron", sans-serif;
+          font-family: "Orbitron", sans-serif;
         }
 
         .produtos-container {
@@ -70,7 +120,7 @@ const Produtos = () => {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
           gap: 20px;
-          justify-items: center; /* Centraliza os itens na grid */
+          justify-items: center;
           margin-bottom: 40px;
         }
 
@@ -82,7 +132,7 @@ const Produtos = () => {
           overflow: hidden;
           transition: transform 0.2s ease, box-shadow 0.2s ease;
           width: 100%;
-          max-width: 300px; /* Define um tamanho máximo para os cards */
+          max-width: 300px;
         }
 
         .produto-card:hover {
@@ -133,9 +183,26 @@ const Produtos = () => {
           color: white;
           border: none;
         }
+
+        .btn-excluir {
+          padding: 10px 20px;
+          background-color: #ff4d4f;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-top: 10px;
+        }
+
+        .btn-excluir:hover {
+          background-color: #ff0000;
+        }
       `}</style>
     </div>
   );
 };
 
 export default Produtos;
+
+
+

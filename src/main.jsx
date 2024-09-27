@@ -8,6 +8,7 @@ import Login from  './routes/Login.jsx'
 import Produtos from './routes/Produtos.jsx'
 import Sobre from './routes/Sobre.jsx'
 import CadastrarProduto from './routes/CadastrarProduto.jsx'
+import Cadastro from './routes/Cadastro.jsx'
 
 
 // criando a função
@@ -24,6 +25,7 @@ const router =createBrowserRouter([
       {path:'/produtos',element:<Produtos/>},
       {path:'/sobre',element:<Sobre/>},
       {path:'/cadastrarproduto',element:<CadastrarProduto/>},
+      {path:'/cadastro',element:<Cadastro/>},
     ]
   }
 ])

@@ -169,19 +169,20 @@ const Produtos = () => {
 
         .btn-cadastrar {
           padding: 15px 30px;
-          background-color: #ffffff;
-          color: black;
-          border: 2px solid #000000;
-          border-radius: 5px;
-          font-size: 16px;
+          background-color: transparent;
+          color: #333333;
+          border: 2px solid #333333;
+          border-radius: 4px;
+          padding: 0.5rem 1rem;
           cursor: pointer;
-          transition: background-color 0.3s ease;
+          font-size: 1.1rem;
+          transition: all 0.3s ease;
         }
 
         .btn-cadastrar:hover {
           background-color: #00bfa6;
-          color: white;
-          border: none;
+          color: #ffffff;
+          border-color: #00bfa6;
         }
 
         .btn-excluir {

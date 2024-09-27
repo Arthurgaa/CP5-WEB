@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.section`
@@ -11,7 +11,7 @@ const Container = styled.section`
     font-family: "Oswald", sans-serif;
 `;
 
-const LoginContainer = styled.div`
+const CadastroContainer = styled.div`
     background: white;
     padding: 2rem;
     border-radius: 8px;
@@ -78,55 +78,46 @@ const Button = styled.button`
     }
 `;
 
-const UteisList = styled.ul`
-    margin-top: 1rem;
-    list-style: none;
-    padding: 0;
-    text-align: center;
-    li {
-        margin-bottom: 0.5rem;
-    }
-`;
-
-function Login() {
+function Cadastro() {
     const usuario = useRef();
     const senha = useRef();
     const [usuarios, setUsuarios] = useState([]);
     const navigate = useNavigate();
 
-    function validar() {
-        for (let i = 0; i < usuarios.length; i++) {
-            if (usuarios[i].usuario === usuario.current.value &&
-                usuarios[i].senha === senha.current.value) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validar()) {
-            const token = Math.random().toString(16).substring(2) +
-                Math.random().toString(16).substring(2);
-            sessionStorage.setItem("usuario", usuario.current.value);
-            sessionStorage.setItem("senha", token);
-            navigate("/produtos");
-        } else {
-            alert("Usuário ou senha inválidos");
-        }
-    }
+        
+        const novoUsuario = {
+            usuario: usuario.current.value,
+            senha: senha.current.value
+        };
 
-    useEffect(() => {
-        fetch("http://localhost:3001/usuarios")
-            .then(res => res.json())
-            .then(res => setUsuarios(res));
-    }, []);
+        // Adicionar o novo usuário ao JSON server
+        try {
+            const response = await fetch('http://localhost:3001/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(novoUsuario),
+            });
+
+            if (!response.ok) {
+                throw new Error('Falha ao cadastrar o usuário.');
+            }
+
+            alert('Usuário cadastrado com sucesso!');
+            navigate("/login"); // Redireciona para a página de login após o cadastro
+        } catch (error) {
+            console.error('Erro ao cadastrar o usuário:', error);
+            alert('Erro ao cadastrar o usuário.');
+        }
+    };
 
     return (
         <Container>
-            <LoginContainer>
-                <Title>Faça seu Login</Title>
+            <CadastroContainer>
+                <Title>Cadastro</Title>
                 <form onSubmit={handleSubmit}>
                     <InputWrapper>
                         <input type="text" id="usuario" ref={usuario} required placeholder=" " />
@@ -136,20 +127,11 @@ function Login() {
                         <input type="password" id="senha" ref={senha} required placeholder=" " />
                         <span>Senha</span>
                     </InputWrapper>
-                    <Button type="submit">Login</Button>
-                    <UteisList>
-                        <li><span>Esqueceu sua senha?</span></li>
-                        <li>
-                            <span>Não possui Conta? </span>
-                            <Link to="/cadastro">Criar</Link> {/* Link para a página de cadastro */}
-                        </li>
-                    </UteisList>
+                    <Button type="submit">Cadastrar</Button>
                 </form>
-            </LoginContainer>
+            </CadastroContainer>
         </Container>
     );
 }
 
-export default Login;
-
-
+export default Cadastro;

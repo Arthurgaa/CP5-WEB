@@ -56,6 +56,9 @@ Produtos
 Cadastrar Produtos
 - Usuários administradores podem acessar a funcionalidade de cadastro de produtos, onde é possível inserir novos itens com informações como nome, descrição, preço, e uma imagem ilustrativa.
 
+  ## Link do Repositório
+  - https://github.com/Arthurgaa/projetoweb
+
 # 👨‍💻 Integrantes 
 
 - Arthur Galvão Alves - RM554462 

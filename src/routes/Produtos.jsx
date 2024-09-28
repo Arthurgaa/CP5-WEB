@@ -137,12 +137,14 @@ const Produtos = () => {
 
         .produto-card:hover {
           transform: translateY(-5px);
-          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 6px 12px rgba(0, 191, 166, 0.7);
         }
 
         .produto-img-container {
           height: 200px;
           background-color: #f4f4f4;
+          cursor: pointer;
+           transition: box-shadow 0.3s ease;
         }
 
         .produto-img {

@@ -13,16 +13,21 @@ const fadeIn = keyframes`
   }
 `;
 
-// Container principal
+// Container principal com altura e largura de 100% da tela
 const SobreContainer = styled.div`
   padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 100vw; /* Ajustado para ocupar 100% da largura da viewport */
+  max-height: 100vh; /* Ajustado para ocupar 100% da altura da viewport */
+  margin: 0;
   text-align: center;
   color: #333;
   background-color: #f7f7f7;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
 `;
 
 // Título principal
@@ -67,7 +72,7 @@ const List = styled.ul`
 
 // Itens da lista com estilo moderno
 const ListItem = styled.li`
-font-family: "Orbitron", sans-serif;
+  font-family: "Orbitron", sans-serif;
   font-size: 1rem;
   color: #333;
   padding: 1.5rem;
@@ -126,3 +131,4 @@ const Sobre = () => {
 };
 
 export default Sobre;
+

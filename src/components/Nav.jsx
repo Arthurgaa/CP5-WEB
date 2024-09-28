@@ -70,6 +70,19 @@ const LogoutButton = styled.button`
 `;
 
 const Nav = () => {
+
+
+    const getUsuario = sessionStorage.getItem('usuario');
+
+      /*função para limpar a sessão e voltar para home */
+    const handleLogout =() => {
+    sessionStorage.removeItem('usuario');
+    sessionStorage.removeItem('senha');
+    alert('Saindo da Sessão !!!');
+    navigate('/');
+  };
+
+
     return (
         <NavContainer>
             {/* Logo no lado esquerdo */}
@@ -77,16 +90,32 @@ const Nav = () => {
                 <Logo src={logo} alt="PowerRide Logo" />
             </Link>
 
+        
+
             {/* Links de navegação centralizados */}
             <NavLinks>
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/produtos">Produtos</NavLink>
                 <NavLink to="/sobre">Sobre</NavLink>
                 <NavLink to="/login">Login</NavLink>
+
+                    
+           
             </NavLinks>
 
+             {/* pega usuario logado */}
+             <span>
+                {getUsuario ? (
+                    <p className="infoUsuario">
+                    Usuário Logado: {getUsuario}
+                    </p>
+                ) : (
+                    <div></div>
+                )}
+                </span>
+
             {/* Botão de logout no lado direito */}
-            <NavLink to="/"><LogoutButton>Logout</LogoutButton></NavLink>
+            <NavLink to="/"><LogoutButton onClick={handleLogout}>Logout</LogoutButton></NavLink>
         </NavContainer>
     );
 }

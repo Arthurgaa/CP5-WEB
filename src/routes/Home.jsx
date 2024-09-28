@@ -1,30 +1,45 @@
-import React, { useEffect, useRef } from 'react';
-import { initSlideshow, destroySlideshow } from '../js/Slideshow'; // Caminho para o Slideshow.js
-import '../css/Slideshow.css'; // Caminho para o Slideshow.css
+import React, { useState } from 'react';
+import { Zoom } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
+
 
 const Home = () => {
-    const containerRef = useRef(null); // Referência para o contêiner do slideshow
 
-    useEffect(() => {
-        if (containerRef.current) {
-            initSlideshow(containerRef.current); // Inicializa o slideshow no contêiner
-        }
 
-        return () => {
-            // Função de limpeza ao desmontar o componente
-            destroySlideshow();
-        };
-    }, []);
+    const spanStyle = {
+        padding: '20px',
+        background: '#efefef',
+        color: '#000000'
+      }
+      
+      const divStyle = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundSize: 'cover',
+        height: '400px'
+      }
+
+      const images = [
+        'src/assets/img1.jpg', 
+        'src/assets/img2.jpg',
+        'src/assets/img3.jpg'
+    ];
+  
 
     return (
-        <div>
-            <div className="slideshow-container" ref={containerRef}>
-                {/* O slideshow será inicializado aqui */}
-            </div>
-        </div>
+    
+      <div className="slide-container">
+        <Zoom scale={0.4}>
+            {
+            images.map((img, index) => <img key={index} style={{width: "100%"}} src={img} />)
+            }
+        </Zoom>
+    </div>
+    
+       
     );
 };
 
 export default Home;
-
 
